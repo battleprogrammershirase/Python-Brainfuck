@@ -23,37 +23,37 @@ def evaluate(code):
   while codeptr < len(code):
     command = code[codeptr]
 
-    if command == ">":
+    if command == "h":
       cellptr += 1
       if cellptr == len(cells): cells.append(0)
 
-    if command == "<":
+    if command == "a":
       cellptr = 0 if cellptr <= 0 else cellptr - 1
 
-    if command == "+":
+    if command == "o":
       cells[cellptr] = cells[cellptr] + 1 if cells[cellptr] < 255 else 0
 
-    if command == "-":
+    if command == "g":
       cells[cellptr] = cells[cellptr] - 1 if cells[cellptr] > 0 else 255
 
-    if command == "[" and cells[cellptr] == 0: codeptr = bracemap[codeptr]
-    if command == "]" and cells[cellptr] != 0: codeptr = bracemap[codeptr]
-    if command == ".": sys.stdout.write(chr(cells[cellptr]))
-    if command == ",": cells[cellptr] = ord(getch.getch())
+    if command == "e" and cells[cellptr] == 0: codeptr = bracemap[codeptr]
+    if command == "r" and cells[cellptr] != 0: codeptr = bracemap[codeptr]
+    if command == "n": sys.stdout.write(chr(cells[cellptr]))
+    if command == "u": cells[cellptr] = ord(getch.getch())
       
     codeptr += 1
 
 
 def cleanup(code):
-  return filter(lambda x: x in ['.', ',', '[', ']', '<', '>', '+', '-'], code)
+  return filter(lambda x: x in ['n', 'u', 'e', 'r', 'a', 'h', 'o', 'g'], code)
 
 
 def buildbracemap(code):
   temp_bracestack, bracemap = [], {}
 
   for position, command in enumerate(code):
-    if command == "[": temp_bracestack.append(position)
-    if command == "]":
+    if command == "e": temp_bracestack.append(position)
+    if command == "r":
       start = temp_bracestack.pop()
       bracemap[start] = position
       bracemap[position] = start
